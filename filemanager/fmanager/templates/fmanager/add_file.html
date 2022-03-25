@@ -1,0 +1,64 @@
+{% extends 'fmanager/base.html' %}
+{% block content %}
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+<script>
+var config = {
+        apiKey: "AIzaSyDEFfPE6-WHc59sGp0LO8fsf3uwJ8QH7Ck",
+        authDomain: "filemanager-6b90c.firebaseapp.com",
+        databaseURL: "https://filemanager-6b90c-default-rtdb.europe-west1.firebasedatabase.app/",
+        storageBucket: "gs://filemanager-6b90c.appspot.com/"
+        };
+        firebase.initializeApp(config);
+
+        function uploadFile()
+        {
+          var storage = firebase.storage();
+          var file = document.getElementById("files").files[0];
+          var storageRef = storage.ref();
+          var thisref = storageRef.child(file.name).put(file);
+
+          thisref.on('state_changed',
+            function(snapshot)
+            {
+              console.log("file uploaded successfully");
+            },
+            function(error)
+            {
+            },
+          function()
+            {
+            var downloadURL = thisref.snapshot.downloadURL;
+            console.log("got url");
+            alert("file uploaded successfully");
+            });
+          thisref.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          document.getElementById("url").value = downloadURL;
+          console.log('File available at', downloadURL);
+          });
+        }
+
+</script>
+    <form action='postfile' method="POST">
+      {% csrf_token %}
+      <h4 style="margin-left:1.0rem;">Dodaj plik do biblioteki</h4>
+      <div class="col-md-3">
+        <input type="text" class="form-control" id='filename' name='filename' placeholder='filename' required><br>
+        <textarea class="form-control" id="desc" rows="3" placeholder="description"></textarea><br>
+      </div>
+      <div class="mb-1">
+        <input type="file" style="margin-left:1.0rem;" class="btn btn-secondary" id="files" name="file[]" value="Wybierz" required>
+        <input type="hidden" name='url' id='url' placeholder='url'>
+        <input type="hidden" name="size" id="size">
+        <input type="hidden" name="type" id="type">
+      </div>
+      <div class="mb-1 mrg-cont">
+        <button type="button" class="btn btn-secondary" value="Powrót" onclick="location.href='{% url 'home_page' %}'">Powrót</button><br>
+        <button type="button" class="btn btn-primary" value="Upload" onclick="uploadFile()">Upload</button>
+        <button type="submit" class="btn btn-primary" value="Wyślij" onclick="location.href='{% url 'post_file' %}'">Wyślij</button>
+      </div>
+    </form>
+
+{% endblock %}

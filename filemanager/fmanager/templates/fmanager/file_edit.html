@@ -1,0 +1,12 @@
+{% extends 'fmanager/base.html' %}
+{% block content %}
+  <h4 style="margin-left:1.0rem; margin-top:0.5rem;">Szczegóły pliku</h4>
+  <div class="col-md-3">
+    <p>Filename: {{ filename }}</p>
+    <p>Created at: {{ timestamp }}</p>
+    <p>Username: {{ username }}</p>
+  </div>
+  <div class="mb-1 mrg-cont">
+    <button type="button" class="btn btn-secondary" value="Powrót" onclick="location.href='{% url 'home_page' %}'">Powrót</button>
+  </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% if message %}
+    <script>
+        alert('{{ message }}');
+    </script>
+{% endif %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Firebase File Manager</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/fmanager.css' %}">
+</head>
+<body>
+<p class="site-title">File Manager</p>
+    <form action="logincheck" method="post">
+    {% csrf_token %}
+        <div class="form-floating col-md-2">
+            <label for="floatingInput"><b>Email address</b></label>
+            <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
+        </div>
+
+        <div class="form-floating col-md-2">
+            <label for="floatingPassword"><b>Password</b></label>
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+            <input type="submit" class="btn btn-primary" value="Zaloguj">
+    </form>
+            <button type="button" class="btn btn-secondary" value="Wyślij" onclick="location.href='{% url 'signup_page' %}'">Rejestracja</button>
+        </div>
+</body>
+</html>

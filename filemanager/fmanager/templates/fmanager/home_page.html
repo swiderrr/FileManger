@@ -1,0 +1,27 @@
+{% extends 'fmanager/base.html' %}
+{% block content %}
+{% load static %}
+{% for filename, timestamp, filenames_joined, url in comb_list %}
+<div class="job-content" style="margin-left:1.0rem; margin-top:0.5rem;">
+    <h5 class="text-center text-md-left">{{ filename }}</h5>
+        <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+            <li class="mr-md-4">
+                <i class="zmdi zmdi-pin mr-2"></i> Created at: {{ timestamp }}
+            </li>
+            <li class="mr-md-4">
+                <i class="zmdi zmdi-money mr-2"></i> File size:
+            </li>
+            <li class="mr-md-4">
+                <i class="zmdi zmdi-time mr-2"></i> File type:
+            </li>
+            <ul>
+                <a href="/file_edit/{{ filename }}" class="btn d-block w-100 d-sm-inline-block btn-light">Edytuj</a>
+            </ul>
+            <ul>
+                <a href="{{ url }}" class="btn d-block w-100 d-sm-inline-block btn-light">Pobierz</a>
+            </ul>
+        </ul>
+
+</div>
+{% endfor %}
+{% endblock %}
